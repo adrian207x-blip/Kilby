@@ -1114,8 +1114,8 @@
   };
 
 // Espacio listo para OneSignal
-  const ONESIGNAL_APP_ID = "ec83b0ff-37d6-47ed-a589-b501e02a28d4";
-  const ONESIGNAL_REST_KEY = "os_v2_app_5sb3b7zx2zd63jmjwua6akri2scwjona5fmu2q52565zggiufgdc5xxchvmnnht6v3xt4egupu74nrnsmueimg23bv4s7asq7x6towq";
+const ONESIGNAL_APP_ID = "ec83b0ff-37d6-47ed-a589-b501e02a28d4";
+  const PIPEDREAM_WEBHOOK_URL = "https://eotesjb5xqzuivx.m.pipedream.net";
 
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
@@ -1141,26 +1141,13 @@
 
   window.pushNotification = async function(titulo, mensaje) {
     try {
-      const res = await fetch("https://api.onesignal.com/notifications", {
+      await fetch(PIPEDREAM_WEBHOOK_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Key " + ONESIGNAL_REST_KEY
-        },
-        body: JSON.stringify({
-          app_id: ONESIGNAL_APP_ID,
-          target_channel: "push",
-          included_segments: ["Subscribed Users"],
-          headings: { es: titulo, en: titulo },
-          contents: { es: mensaje, en: mensaje }
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo, mensaje })
       });
-      const data = await res.json();
-      if (!res.ok) {
-        alert("Error OneSignal (" + res.status + "): " + JSON.stringify(data.errors || data));
-      }
     } catch (err) {
-      alert("Error de red al enviar push: " + err.message);
+      console.error("Error enviando notificación:", err);
     }
   };
 </script>

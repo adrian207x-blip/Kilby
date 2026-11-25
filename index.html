@@ -1113,26 +1113,38 @@
     set(roomRef, window.state);
   };
 
-  // Espacio listo para OneSignal
+// Espacio listo para OneSignal
   const ONESIGNAL_APP_ID = "ec83b0ff-37d6-47ed-a589-b501e02a28d4";
   const ONESIGNAL_REST_KEY = "os_v2_app_5sb3b7zx2zd63jmjwua6akri2q6ap5j7jmgemamsuptejn2375k4lnpieddg4ib4u7rlysittka7a3s7bm7knsml2prmq762qq6drfa";
 
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
-    if (ONESIGNAL_APP_ID === "TU_ONESIGNAL_APP_ID") return;
     await OneSignal.init({
       appId: ONESIGNAL_APP_ID,
+      serviceWorkerPath: "/Kilby/OneSignalSDKWorker.js",
+      serviceWorkerParam: { scope: "/Kilby/" },
       notifyButton: { enable: false }
     });
+    if (OneSignal.Notifications.permission) {
+      document.getElementById("notifBanner").style.display = "none";
+    }
   });
 
+  window.requestNotifPermission = function() {
+    window.OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.Notifications.requestPermission();
+      if (OneSignal.Notifications.permission) {
+        document.getElementById("notifBanner").style.display = "none";
+      }
+    });
+  };
+
   window.pushNotification = async function(titulo, mensaje) {
-    if (ONESIGNAL_APP_ID === "TU_ONESIGNAL_APP_ID") return;
-    await fetch("https://onesignal.com/api/v1/notifications", {
+    await fetch("https://api.onesignal.com/notifications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Basic " + ONESIGNAL_REST_KEY
+        "Authorization": "Key " + ONESIGNAL_REST_KEY
       },
       body: JSON.stringify({
         app_id: ONESIGNAL_APP_ID,

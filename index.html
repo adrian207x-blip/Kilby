@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Kirby Love" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Dream Land 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-1: #ff85b3;
+      --pink-2: #ff5c9d;
+      --pink-soft: #ffe3ee;
+      --lavender: #e0c3fc;
+      --sky: #cce7ff;
+      --gold: #ffd166;
+      --text: #4a304d;
+      --muted: #8b6e91;
+      --glass: rgba(255, 255, 255, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background: linear-gradient(160deg, #ffd6e8 0%, #fff0f6 45%, #d8ecff 100%);
+      background-attachment: fixed;
+      padding-bottom: 105px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fondo animado Dream Land */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 999px;
+      filter: blur(2px);
+      animation: drift 22s linear infinite;
+    }
+    .cloud.c1 { width: 120px; height: 42px; top: 8%; left: -120px; animation-duration: 28s; }
+    .cloud.c2 { width: 90px; height: 32px; top: 24%; left: -100px; animation-duration: 35s; animation-delay: -10s; }
+    .cloud.c3 { width: 140px; height: 48px; top: 68%; left: -140px; animation-duration: 32s; animation-delay: -18s; }
+
+    @keyframes drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 16px 16px 0;
+    }
+
+    /* Banner de Notificaciones */
+    .notif-banner {
+      background: linear-gradient(135deg, #ff7eb3, #a18cd1);
+      color: white;
+      border-radius: 20px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(255, 126, 179, 0.28);
+      font-size: 0.82rem;
+    }
+
+    .notif-banner button {
+      background: white;
+      color: var(--pink-2);
+      border: none;
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .pill-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--glass-border);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--pink-2);
+      box-shadow: 0 6px 16px rgba(255, 133, 179, 0.16);
+    }
+
+    .role-btn {
+      display: block;
+      margin: 6px auto 0;
+      background: none;
+      border: none;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    /* Tarjetas Glassmorphism */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 2px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 30px rgba(232, 74, 138, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    /* Escenario Kirby SVG */
+    .couple-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .avatar-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 24px;
+      padding: 14px 8px;
+      text-align: center;
+      border: 2px solid #ffe5f0;
+      box-shadow: 0 6px 14px rgba(255, 133, 179, 0.08);
+    }
+
+    .avatar-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .kirby-svg {
+      width: 82px;
+      height: 82px;
+      animation: bounceFloat 3.2s ease-in-out infinite;
+      filter: drop-shadow(0 6px 10px rgba(255, 105, 165, 0.25));
+    }
+
+    @keyframes bounceFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-6px) scale(1.03); }
+    }
+
+    .mood-badge {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--pink-soft);
+      color: var(--pink-2);
+    }
+
+    .mood-badge.blue {
+      background: #e3f2ff;
+      color: #2b7de9;
+    }
+
+    /* Selector de Estados y Filtros */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+
+    .mood-chip {
+      background: white;
+      border: 2px solid #ffe0ec;
+      border-radius: 18px;
+      padding: 9px 10px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mood-chip.active {
+      background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(255, 92, 157, 0.3);
+    }
+
+    /* Botón Warp Star */
+    .warp-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff7eb3 0%, #ff5c9d 50%, #ff9a9e 100%);
+      color: white;
+      border: none;
+      border-radius: 22px;
+      padding: 15px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(255, 92, 157, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.12s;
+    }
+
+    .warp-btn:active { transform: scale(0.96); }
+
+    .counter-sub {
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* Post-it */
+    .postit {
+      background: linear-gradient(135deg, #fffbe6, #fff3c4);
+      border: 2px dashed #ffca3a;
+      border-radius: 20px;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: #6b4e16;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-group input {
+      flex: 1;
+      border: 2px solid #ffd6e7;
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      background: white;
+      outline: none;
+    }
+
+    .input-group button {
+      background: var(--pink-2);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 0 16px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 100 Razones */
+    .timer-box {
+      background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      color: white;
+      border-radius: 22px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(161, 140, 209, 0.3);
+    }
+
+    .stars-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .star-tile {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .star-tile.unlocked {
+      background: linear-gradient(145deg, #fff5b8, #ffd166);
+      border: 2px solid #ffb703;
+      color: #7f4f24;
+      box-shadow: 0 4px 10px rgba(255, 209, 102, 0.35);
+    }
+
+    .star-tile.latest {
+      animation: glowPulse 1.6s infinite;
+      border-color: var(--pink-2);
+    }
+
+    .star-tile.locked {
+      background: rgba(255, 255, 255, 0.6);
+      border: 2px dashed #e2c2d4;
+      color: #b59bb8;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 92, 157, 0.45); }
+      50% { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(255, 92, 157, 0); }
+    }
+
+    /* Sobres SOS */
+    .env-card {
+      background: white;
+      border-radius: 22px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 2px solid #ffe0ec;
+      box-shadow: 0 6px 16px rgba(255, 126, 179, 0.1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s;
+    }
+
+    .env-card:active { transform: scale(0.97); }
+
+    .env-seal {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffe3ee, #ffd6e7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      box-shadow: inset 0 -3px 6px rgba(255, 92, 157, 0.15);
+    }
+
+    .env-text h4 { font-size: 0.94rem; margin-bottom: 2px; }
+    .env-text p { font-family: 'Quicksand', sans-serif; font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+
+    /* Tabs */
+    .tab-pane { display: none; animation: slideUp 0.28s ease; }
+    .tab-pane.active { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 26px;
+      padding: 8px;
+      display: flex;
+      gap: 6px;
+      box-shadow: 0 12px 30px rgba(232, 74, 138, 0.22);
+      border: 2px solid white;
+      z-index: 50;
+    }
+
+    .nav-item {
+      flex: 1;
+      border: none;
+      background: transparent;
+      border-radius: 18px;
+      padding: 8px 4px;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #ffe3ee, #ffd1e3);
+      color: var(--pink-2);
+    }
+
+    .nav-item .ico { font-size: 1.25rem; }
+
+    /* Modal */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(74, 48, 77, 0.5);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .modal-bg.open { display: flex; }
+
+    .modal-box {
+      background: white;
+      border-radius: 30px;
+      padding: 26px 22px;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      border: 3px solid var(--pink-1);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+      animation: pop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes pop {
+      from { transform: scale(0.82); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-pill {
+      display: inline-block;
+      background: var(--pink-soft);
+      color: var(--pink-2);
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .modal-body {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .btn-row { display: flex; gap: 10px; justify-content: center; }
+    .btn-pink {
+      background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+      color: white; border: none; border-radius: 16px;
+      padding: 10px 18px; font-family: inherit; font-weight: 600; cursor: pointer;
+    }
+    .btn-soft {
+      background: #f5ebf2; color: var(--text); border: none; border-radius: 16px;
+      padding: 10px 18px; font-family: inherit; font-weight: 600; cursor: pointer;
+    }
+
+    /* Partículas */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.5rem;
+      animation: rise 1.3s ease-out forwards;
+      z-index: 999;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.7); opacity: 1; }
+      100% { transform: translateY(-150px) scale(1.35); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-decor">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- Banner para activar notificaciones en iPhone -->
+    <div class="notif-banner" id="notifBanner">
+      <span>🔔 Activa los avisos para que te lleguen mis abrazos</span>
+      <button onclick="requestNotifPermission()">Activar</button>
+    </div>
+
+    <header>
+      <div class="pill-header" id="headerBadge">⭐ Dream Land</div>
+      <button class="role-btn" onclick="switchRole()" id="roleText">Perfil: Lia 🌸 (toca para cambiar)</button>
+    </header>
+
+    <!-- PESTAÑA 1: NOSOTROS -->
+    <section id="tab-home" class="tab-pane active">
+      <div class="card">
+        <div class="card-header">
+          <span>✨ Conectados a distancia</span>
+          <span style="font-size:0.75rem; color:var(--pink-2);">● En vivo</span>
+        </div>
+
+        <div class="couple-grid">
+          <div class="avatar-card">
+            <div class="avatar-name">Lia 🌸</div>
+            <div id="kirbyElla"></div>
+            <div class="mood-badge" id="moodEllaText">Feliz</div>
+          </div>
+          <div class="avatar-card">
+            <div class="avatar-name">Adrian ⭐</div>
+            <div id="kirbyEl"></div>
+            <div class="mood-badge blue" id="moodElText">Feliz</div>
+          </div>
+        </div>
+
+        <div class="mood-grid" id="moodSelectorGrid">
+          <button class="mood-chip" data-mood="Feliz" onclick="setMood(this)">🌸 Feliz</button>
+          <button class="mood-chip" data-mood="Te extraño" onclick="setMood(this)">🥺 Te extraño</button>
+          <button class="mood-chip" data-mood="Libre" onclick="setMood(this)">🎧 Libre</button>
+          <button class="mood-chip" data-mood="Ocupad@" onclick="setMood(this)">📚 Ocupad@</button>
+          <button class="mood-chip" data-mood="Mimida" onclick="setMood(this)">😴 Mimida</button>
+          <button class="mood-chip" data-mood="Mal humor" onclick="setMood(this)">😤 Mal humor</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="warp-btn" onclick="sendHug()">⭐ Enviar Abrazo Warp Star</button>
+        <div class="counter-sub" id="hugCounter">Hoy nos hemos pensado 0 veces ✨</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span>📌 Notita de Dream Land</span></div>
+        <div class="postit" id="noteDisplay">"Aunque estemos lejos, siempre estoy contigo 💕"</div>
+        <div class="input-group">
+          <input type="text" id="noteInput" maxlength="90" placeholder="Escribe una notita linda..." />
+          <button onclick="saveNote()">Enviar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 2: 100 RAZONES -->
+    <section id="tab-reasons" class="tab-pane">
+      <div class="timer-box" id="timerBox">⭐ Próxima estrella en: calculando...</div>
+      <div class="card">
+        <div class="card-header">
+          <span>🌟 100 Cosas que me gustan de ti</span>
+          <span style="font-size:0.8rem; color:var(--pink-2);" id="progressBadge">1 / 100</span>
+        </div>
+        <div class="stars-grid" id="starsGrid"></div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 3: SOBRES SOS CON FILTROS -->
+    <section id="tab-sos" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <span>💌 Sobres de Emergencia</span>
+          <span style="font-size:0.78rem; color:var(--pink-2);">16 sobres</span>
+        </div>
+
+        <div class="filter-row" id="sosFilters">
+          <button class="mood-chip active" onclick="filterEnvelopes('all', this)">✨ Todos</button>
+          <button class="mood-chip" onclick="filterEnvelopes('animo', this)">😤 Ánimo</button>
+          <button class="mood-chip" onclick="filterEnvelopes('distancia', this)">✈️ Distancia</button>
+          <button class="mood-chip" onclick="filterEnvelopes('dia', this)">🍓 Día a día</button>
+          <button class="mood-chip" onclick="filterEnvelopes('noche', this)">🌙 Noche</button>
+        </div>
+
+        <div id="envelopesContainer"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modalBg" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-pill" id="mTag">⭐ Razón #1</div>
+      <div style="font-size:2.6rem; margin-bottom:10px;" id="mIcon">🌸</div>
+      <p class="modal-body" id="mText"></p>
+      <div class="btn-row">
+        <button class="btn-pink" id="mAlertBtn" style="display:none;" onclick="sendSOSAlert()">🚨 Pedir mimo ya</button>
+        <button class="btn-soft" onclick="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="openTab('home', this)">
+      <span class="ico">🌸</span><span>Nosotros</span>
+    </button>
+    <button class="nav-item" onclick="openTab('reasons', this)">
+      <span class="ico">⭐</span><span>100 Razones</span>
+    </button>
+    <button class="nav-item" onclick="openTab('sos', this)">
+      <span class="ico">💌</span><span>Sobres SOS</span>
+    </button>
+  </nav>
+
+  <script>
+    // ==========================================
+    // 1. CONFIGURACIÓN PRINCIPAL
+    // ==========================================
+    const START_DATE = new Date(2026, 10, 25, 0, 0, 0); // Año, Mes (0-11), Día
+    const DAYS_PER_UNLOCK = 2; // 1 = cada día, 2 = cada 2 días
+
+    const REASONS = [
+      "Porque tu sonrisa hace que cualquier día pesado valga la pena, incluso a través de una pantalla.",
+      "Por la forma en que te emocionas con las cosas que te gustan, eres pura luz.",
+      "Porque hablar contigo se siente como volver a casa sin importar cuántos kilómetros haya.",
+      "Por tu voz cuando tienes sueño y aun así te quedas un ratito más hablando conmigo.",
+      "Porque hasta cuando estás de mal humor me dan ganas de abrazarte fuerte.",
+      "Por tu sentido del humor y todas nuestras bromas internas que nadie más entiende.",
+      "Por lo fuerte y dedicada que eres con tus cosas, te admiro muchísimo.",
+      "Porque cada vez que veo algo de Kirby o de color rosa me acuerdo automáticamente de ti.",
+      "Porque contigo aprendí que la distancia no le gana a las ganas reales de quererse.",
+      "Porque me haces querer ser una mejor persona todos los días."
+      // Sigue agregando tus razones hasta llegar a la #100...
+    ];
+
+    const ENVELOPES = [
+      // ÁNIMO Y ESTRÉS
+      {
+        cat: "animo",
+        icon: "😤",
+        title: "Ábrelo cuando estés de mal humor",
+        sub: "Para bajar el estrés y respirar juntos",
+        msg: "Respira hondo 3 veces conmigo. Sea lo que sea que te tenga estresada o enojada ahorita, no tienes que cargar con todo sola. Tómate un vasito de agua y recuerda que estoy de tu lado siempre. ¿Quieres que te escuche o que te distraiga?",
+        alert: true
+      },
+      {
+        cat: "animo",
+        icon: "🌧️",
+        title: "Ábrelo cuando hayas tenido un mal día",
+        sub: "Un recordatorio de lo valiosa que eres",
+        msg: "Siento mucho que hoy haya sido un día difícil, mi vida. No te exijas de más hoy: ponte cómoda, descansa y déjate consentir aunque sea a la distancia. Estoy súper orgulloso de ti.",
+        alert: true
+      },
+      {
+        cat: "animo",
+        icon: "🤯",
+        title: "Ábrelo cuando te sientas abrumada",
+        sub: "Cuando sientas que tienes mil cosas encima",
+        msg: "Pausa un segundo. No tienes que resolver toda la semana hoy mismo, ve paso a paso. Eres muchísimo más capaz de lo que crees en este momento. ¡Kirby confía en ti y yo mucho más!",
+        alert: false
+      },
+      {
+        cat: "animo",
+        icon: "🥺",
+        title: "Ábrelo cuando necesites sentirte querida",
+        sub: "Por si tu cabeza te juega una mala pasada",
+        msg: "Por si hoy dudaste un poquito: eres mi persona favorita en el mundo entero. Me encanta cómo eres, cómo piensas y cada detalle tuyo. Nunca olvides lo muchísimo que te amo.",
+        alert: true
+      },
+
+      // DISTANCIA
+      {
+        cat: "distancia",
+        icon: "✈️",
+        title: "Ábrelo cuando me extrañes mucho",
+        sub: "Cuando los kilómetros pesen más de lo normal",
+        msg: "Si abriste este sobre es porque la distancia nos está pegando hoy. Cierra los ojos un segundo e imagina que te doy un abrazo gigante de esos que duran minutos. Cada día que pasa es un día menos para volver a vernos. ¡Poyo! 💕",
+        alert: true
+      },
+      {
+        cat: "distancia",
+        icon: "🫂",
+        title: "Ábrelo cuando necesites un abrazo real",
+        sub: "Vale canjeable por un abrazo de 10 minutos",
+        msg: "Este sobre es un cupón oficial: la próxima vez que te tenga enfrente te debo un abrazo larguísimo sin soltarte hasta que se te recargue toda la batería. Mientras tanto, recibe este abrazo virtual.",
+        alert: false
+      },
+      {
+        cat: "distancia",
+        icon: "📱",
+        title: "Ábrelo cuando estemos ocupados sin hablar",
+        sub: "Para recordarte que sigo pensando en ti",
+        msg: "Aunque ahorita cada quien esté en sus cosas y no podamos estar en llamada, no dejas de pasar por mi cabeza. Apenas me desocupe corro a escribirte. Te extraño mucho.",
+        alert: false
+      },
+      {
+        cat: "distancia",
+        icon: "⏳",
+        title: "Ábrelo cuando sientas que falta mucho para vernos",
+        sub: "Para mirar todo lo que ya hemos logrado",
+        msg: "Mira todo el camino que ya recorrimos juntos. La distancia es solo un capítulo temporal en nuestra historia, pero lo que sentimos es para siempre. Va a valer cada segundo de espera.",
+        alert: false
+      },
+
+      // DÍA A DÍA Y ANTOJOS
+      {
+        cat: "dia",
+        icon: "🍓",
+        title: "Ábrelo cuando tengas hambre o antojo",
+        sub: "Modo Kirby inhalando comida",
+        msg: "¡Alerta de Maxim Tomato! Ve a comer algo rico ahorita mismo, no te saltes comidas. Y si estás de antojo dulce, avísame para ver cómo te consiento a la distancia.",
+        alert: true
+      },
+      {
+        cat: "dia",
+        icon: "📚",
+        title: "Ábrelo antes de algo importante",
+        sub: "Un examen, entrega o día pesado",
+        msg: "¡Tú puedes con esto y con mucho más! Tienes todo el talento y la inteligencia para que te vaya increíble. Aquí tienes a tu fan número uno haciéndote barra desde lejos.",
+        alert: false
+      },
+      {
+        cat: "dia",
+        icon: "🥱",
+        title: "Ábrelo cuando estés aburrida",
+        sub: "Cuando no sepas qué hacer",
+        msg: "Misión secreta de Kirby: tómate una selfie haciendo una mueca chistosa y mándamela ahorita mismo sin contexto. ¡Te toca!",
+        alert: false
+      },
+      {
+        cat: "dia",
+        icon: "☀️",
+        title: "Ábrelo apenas te despiertes sin ganas",
+        sub: "Para arrancar el día con energía pastel",
+        msg: "¡Buenos días, princesa! Sé que cuesta salir de la cama hoy, pero recuerda que hoy es un día más cerca de estar juntos. Te mando un besito en la frente para empezar bien.",
+        alert: false
+      },
+
+      // NOCHE Y MOMENTOS LINDOS
+      {
+        cat: "noche",
+        icon: "🌙",
+        title: "Ábrelo cuando no puedas dormir",
+        sub: "Modo Sleep Kirby activado",
+        msg: "Deja el celular un ratito después de leer esto, acomoda tu almohada y piensa en nuestro próximo viaje o cita juntos. Desde aquí te mando toda mi paz para que descanses rico. Buenas noches ✨",
+        alert: false
+      },
+      {
+        cat: "noche",
+        icon: "💭",
+        title: "Ábrelo si sobrepiensas en la madrugada",
+        sub: "Para calmar la mente antes de dormir",
+        msg: "De noche la mente exagera todo. Respira suave: estamos bien, te quiero muchísimo y mañana será un día más tranquilo. Duérmete sabiendo que mi corazón es tuyo.",
+        alert: false
+      },
+      {
+        cat: "noche",
+        icon: "😊",
+        title: "Ábrelo cuando estés muy feliz",
+        sub: "Para celebrar tus momentos bonitos",
+        msg: "¡Qué alegría saber que estás contenta! Tu felicidad es la mía. Cuéntame qué pasó porque me encanta verte sonreír y celebrar cada cosa buena que te pasa.",
+        alert: false
+      },
+      {
+        cat: "noche",
+        icon: "💌",
+        title: "Ábrelo solo porque sí",
+        sub: "Un recordatorio sorpresa de amor",
+        msg: "No necesitabas ninguna razón especial para abrir este sobre, solo quería recordarte que te amo con toda mi alma y que eres lo mejor que me ha pasado. ¡Poyo! 🌸",
+        alert: false
+      }
+    ];
+
+    // ==========================================
+    // 2. ESTADO GLOBAL
+    // ==========================================
+    let role = localStorage.getItem("k_role") || "ella";
+    window.state = JSON.parse(localStorage.getItem("k_state")) || {
+      ellaMood: "Feliz",
+      elMood: "Feliz",
+      hugs: 0,
+      note: "Aunque estemos lejos, siempre estoy contigo 💕"
+    };
+
+    window.save = function() {
+      localStorage.setItem("k_state", JSON.stringify(window.state));
+      window.renderHome();
+    };
+
+    window.pushNotification = async function(titulo, mensaje) {
+      // Se activa al conectar OneSignal abajo
+      console.log("Notificación:", titulo, mensaje);
+    };
+
+    // ==========================================
+    // 3. DIBUJO SVG DE KIRBY DINÁMICO
+    // ==========================================
+    function getKirbySVG(mood, isBlue = false) {
+      const bodyColor = isBlue ? "#90cdf4" : "#ff9ebb";
+      const footColor = isBlue ? "#3182ce" : "#e63973";
+      const cheekColor = isBlue ? "#f687b3" : "#ff4d8d";
+
+      let face = `
+        <ellipse cx="38" cy="43" rx="4" ry="7" fill="#2d1b36"/>
+        <ellipse cx="62" cy="43" rx="4" ry="7" fill="#2d1b36"/>
+        <circle cx="38" cy="40" r="2" fill="#fff"/>
+        <circle cx="62" cy="40" r="2" fill="#fff"/>
+        <path d="M46 51 Q50 56 54 51" stroke="#2d1b36" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      `;
+
+      if (mood === "Mimida") {
+        face = `
+          <path d="M33 45 Q38 49 43 45" stroke="#2d1b36" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M57 45 Q62 49 67 45" stroke="#2d1b36" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="50" cy="54" r="3" fill="#e63973"/>
+          <text x="68" y="25" font-size="12" fill="#7c5295" font-weight="bold">zZ</text>
+        `;
+      } else if (mood === "Mal humor") {
+        face = `
+          <ellipse cx="38" cy="46" rx="3.5" ry="5.5" fill="#2d1b36"/>
+          <ellipse cx="62" cy="46" rx="3.5" ry="5.5" fill="#2d1b36"/>
+          <path d="M32 37 L44 41" stroke="#2d1b36" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M68 37 L56 41" stroke="#2d1b36" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M45 55 Q50 51 55 55" stroke="#2d1b36" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        `;
+      } else if (mood === "Te extraño") {
+        face = `
+          <circle cx="38" cy="44" r="5" fill="#2d1b36"/>
+          <circle cx="62" cy="44" r="5" fill="#2d1b36"/>
+          <circle cx="36.5" cy="42" r="2.2" fill="#fff"/>
+          <circle cx="60.5" cy="42" r="2.2" fill="#fff"/>
+          <path d="M46 53 Q50 50 54 53" stroke="#2d1b36" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        `;
+      }
+
+      return `
+        <svg viewBox="0 0 100 100" class="kirby-svg">
+          <ellipse cx="33" cy="82" rx="14" ry="8" fill="${footColor}" transform="rotate(-12 33 82)"/>
+          <ellipse cx="67" cy="82" rx="14" ry="8" fill="${footColor}" transform="rotate(12 67 82)"/>
+          <ellipse cx="18" cy="52" rx="11" ry="8" fill="${bodyColor}" transform="rotate(-25 18 52)"/>
+          <ellipse cx="82" cy="52" rx="11" ry="8" fill="${bodyColor}" transform="rotate(25 82 52)"/>
+          <circle cx="50" cy="50" r="34" fill="${bodyColor}"/>
+          <ellipse cx="29" cy="52" rx="6" ry="3.5" fill="${cheekColor}" opacity="0.65"/>
+          <ellipse cx="71" cy="52" rx="6" ry="3.5" fill="${cheekColor}" opacity="0.65"/>
+          ${face}
+        </svg>
+      `;
+    }
+
+    // ==========================================
+    // 4. INTERACCIÓN Y NAVEGACIÓN
+    // ==========================================
+    function checkNotifBanner() {
+      if (!("Notification" in window) || Notification.permission === "granted") {
+        document.getElementById("notifBanner").style.display = "none";
+      }
+    }
+
+    async function requestNotifPermission() {
+      if (!("Notification" in window)) {
+        alert("En iPhone primero toca Compartir -> Agregar a pantalla de inicio, y ábrela desde el ícono nuevo 🌸");
+        return;
+      }
+      const perm = await Notification.requestPermission();
+      if (perm === "granted") {
+        document.getElementById("notifBanner").style.display = "none";
+        new Notification("¡Notificaciones activadas! 🌸", {
+          body: "Ahora te avisaré cuando te mande un abrazo Warp Star ⭐"
+        });
+      }
+    }
+
+    function switchRole() {
+      role = role === "ella" ? "el" : "ella";
+      localStorage.setItem("k_role", role);
+      window.renderHome();
+    }
+
+    function openTab(id, btn) {
+      document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+      document.getElementById("tab-" + id).classList.add("active");
+      btn.classList.add("active");
+    }
+
+    window.renderHome = function() {
+      document.getElementById("roleText").textContent = `Perfil: ${role === "ella" ? "Lia 🌸" : "Adrian ⭐"} (toca para cambiar)`;
+      document.getElementById("kirbyElla").innerHTML = getKirbySVG(window.state.ellaMood, false);
+      document.getElementById("kirbyEl").innerHTML = getKirbySVG(window.state.elMood, true);
+      document.getElementById("moodEllaText").textContent = window.state.ellaMood;
+      document.getElementById("moodElText").textContent = window.state.elMood;
+      document.getElementById("hugCounter").textContent = `Hoy nos hemos pensado ${window.state.hugs} ${window.state.hugs === 1 ? "vez" : "veces"} ✨`;
+      document.getElementById("noteDisplay").textContent = `"${window.state.note}"`;
+
+      const myMood = role === "ella" ? window.state.ellaMood : window.state.elMood;
+      document.querySelectorAll("#moodSelectorGrid .mood-chip").forEach(c => {
+        c.classList.toggle("active", c.dataset.mood === myMood);
+      });
+    };
+
+    function setMood(btn) {
+      const newMood = btn.dataset.mood;
+      if (role === "ella") window.state.ellaMood = newMood;
+      else window.state.elMood = newMood;
+      burst("🌸");
+      window.save();
+      window.pushNotification("🌸 Cambio de estado en Dream Land", `${role === "ella" ? "Lia" : "Adrian"} ahora está: ${newMood}`);
+    }
+
+    function sendHug() {
+      window.state.hugs++;
+      burst("⭐");
+      window.save();
+      window.pushNotification("⭐ Abrazo Warp Star", `${role === "ella" ? "Lia" : "Adrian"} está pensando en ti ahorita 💕`);
+    }
+
+    function saveNote() {
+      const inp = document.getElementById("noteInput");
+      if (!inp.value.trim()) return;
+      window.state.note = inp.value.trim();
+      inp.value = "";
+      burst("💌");
+      window.save();
+      window.pushNotification("📌 Nueva notita en Dream Land", window.state.note);
+    }
+
+    // ==========================================
+    // 5. 100 RAZONES DESBLOQUEABLES
+    // ==========================================
+    function getUnlocked() {
+      const days = Math.floor(Math.max(0, Date.now() - START_DATE.getTime()) / 86400000);
+      return Math.min(100, Math.floor(days / DAYS_PER_UNLOCK) + 1);
+    }
+
+    function renderReasons() {
+      const unlocked = getUnlocked();
+      document.getElementById("progressBadge").textContent = `${unlocked} / 100`;
+      document.getElementById("headerBadge").textContent = `⭐ ${unlocked} de 100 estrellas`;
+      const grid = document.getElementById("starsGrid");
+      grid.innerHTML = "";
+      for (let i = 1; i <= 100; i++) {
+        const isOpen = i <= unlocked;
+        const tile = document.createElement("div");
+        tile.className = `star-tile ${isOpen ? "unlocked" : "locked"} ${i === unlocked ? "latest" : ""}`;
+        tile.innerHTML = `<span>${isOpen ? "⭐" : "🔒"}</span><span>#${i}</span>`;
+        tile.onclick = () => {
+          if (!isOpen) return showModal(`🔒 Estrella #${i}`, "⏳", "Aún está durmiendo esta estrella. ¡Vuelve pronto para descubrirla!");
+          burst("✨");
+          showModal(`⭐ Razón #${i}`, "🌸", REASONS[i - 1] || `Razón #${i}: Porque cada día encuentro un motivo nuevo para quererte más. 💕`);
+        };
+        grid.appendChild(tile);
+      }
+    }
+
+    function updateTimer() {
+      const u = getUnlocked();
+      if (u >= 100) return (document.getElementById("timerBox").textContent = "🎉 ¡Desbloqueaste las 100 estrellas!");
+      const nextMs = START_DATE.getTime() + u * DAYS_PER_UNLOCK * 86400000;
+      const diff = Math.max(0, nextMs - Date.now());
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById("timerBox").textContent = `⭐ Próxima estrella (#${u + 1}) en: ${h}h ${m}m ${s}s`;
+    }
+
+    // ==========================================
+    // 6. SOBRES SOS CON FILTRO
+    // ==========================================
+    function filterEnvelopes(category, btn) {
+      document.querySelectorAll("#sosFilters .mood-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderEnvelopes(category);
+    }
+
+    function renderEnvelopes(filter = "all") {
+      const box = document.getElementById("envelopesContainer");
+      box.innerHTML = "";
+      const list = filter === "all" ? ENVELOPES : ENVELOPES.filter(e => e.cat === filter);
+
+      list.forEach(e => {
+        const card = document.createElement("div");
+        card.className = "env-card";
+        card.innerHTML = `<div class="env-seal">${e.icon}</div><div class="env-text"><h4>${e.title}</h4><p>${e.sub}</p></div>`;
+        card.onclick = () => {
+          burst(e.icon);
+          showModal(e.title, e.icon, e.msg, e.alert);
+        };
+        box.appendChild(card);
+      });
+    }
+
+    function showModal(tag, ico, text, hasAlert = false) {
+      document.getElementById("mTag").textContent = tag;
+      document.getElementById("mIcon").textContent = ico;
+      document.getElementById("mText").textContent = text;
+      document.getElementById("mAlertBtn").style.display = hasAlert ? "inline-block" : "none";
+      document.getElementById("modalBg").classList.add("open");
+    }
+
+    function closeModal() { document.getElementById("modalBg").classList.remove("open"); }
+
+    function sendSOSAlert() {
+      window.state.note = "🚨 ¡Alerta Kirby! Necesito un mimo o llamada urgente 💕";
+      window.save();
+      window.pushNotification("🚨 Alerta Kirby SOS", "Necesito un mimo o llamada urgente 💕");
+      closeModal();
+      burst("🚨");
+    }
+
+    function burst(sym) {
+      for (let i = 0; i < 6; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.textContent = sym;
+        s.style.left = (18 + Math.random() * 64) + "vw";
+        s.style.top = (45 + Math.random() * 25) + "vh";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1300);
+      }
+    }
+
+    // Inicializar
+    checkNotifBanner();
+    window.renderHome();
+    renderReasons();
+    renderEnvelopes("all");
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+
+  <!-- ==========================================
+       CONEXIÓN A FIREBASE Y ONESIGNAL (Opcional: rellena tus claves)
+       ========================================== -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBcAYLwMwb7jlfTnAtEQtUTTZoT41jHsmI",
+    authDomain: "kirby-love.firebaseapp.com",
+    databaseURL: "https://kirby-love-default-rtdb.firebaseio.com",
+    projectId: "kirby-love",
+    storageBucket: "kirby-love.firebasestorage.app",
+    messagingSenderId: "818109699859",
+    appId: "1:818109699859:web:25a750a5ca1fa4e3feece6",
+    measurementId: "G-9RMR4GV8QV"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const roomRef = ref(db, "pareja/estado");
+
+  onValue(roomRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      window.state = data;
+      window.renderHome();
+    }
+  });
+
+  window.save = function() {
+    set(roomRef, window.state);
+  };
+
+  // Espacio listo para OneSignal
+  const ONESIGNAL_APP_ID = "TU_ONESIGNAL_APP_ID";
+  const ONESIGNAL_REST_KEY = "TU_ONESIGNAL_REST_API_KEY";
+
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    if (ONESIGNAL_APP_ID === "TU_ONESIGNAL_APP_ID") return;
+    await OneSignal.init({
+      appId: ONESIGNAL_APP_ID,
+      notifyButton: { enable: false }
+    });
+  });
+
+  window.pushNotification = async function(titulo, mensaje) {
+    if (ONESIGNAL_APP_ID === "TU_ONESIGNAL_APP_ID") return;
+    await fetch("https://onesignal.com/api/v1/notifications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + ONESIGNAL_REST_KEY
+      },
+      body: JSON.stringify({
+        app_id: ONESIGNAL_APP_ID,
+        included_segments: ["Subscribed Users"],
+        headings: { es: titulo, en: titulo },
+        contents: { es: mensaje, en: mensaje }
+      })
+    });
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "Dream Land - Nosotros",
+  "short_name": "Kirby Love",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffe6f0",
+  "theme_color": "#ff85b3",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/616/616490.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

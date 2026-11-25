@@ -1140,19 +1140,28 @@
   };
 
   window.pushNotification = async function(titulo, mensaje) {
-    await fetch("https://api.onesignal.com/notifications", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Key " + ONESIGNAL_REST_KEY
-      },
-      body: JSON.stringify({
-        app_id: ONESIGNAL_APP_ID,
-        included_segments: ["Subscribed Users"],
-        headings: { es: titulo, en: titulo },
-        contents: { es: mensaje, en: mensaje }
-      })
-    });
+    try {
+      const res = await fetch("https://api.onesignal.com/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Key " + ONESIGNAL_REST_KEY
+        },
+        body: JSON.stringify({
+          app_id: ONESIGNAL_APP_ID,
+          target_channel: "push",
+          included_segments: ["Subscribed Users"],
+          headings: { es: titulo, en: titulo },
+          contents: { es: mensaje, en: mensaje }
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert("Error OneSignal (" + res.status + "): " + JSON.stringify(data.errors || data));
+      }
+    } catch (err) {
+      alert("Error de red al enviar push: " + err.message);
+    }
   };
 </script>
 </body>
